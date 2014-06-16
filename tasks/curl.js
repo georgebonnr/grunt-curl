@@ -43,9 +43,9 @@ module.exports = function (grunt) {
       src: srcFile,
       dest: dest
     }, function handleCurlComplete (err) {
-      // If there is an error, fail
+      // If there is an error, DON'T FAIL (for use offline) - GB
       if (err) {
-        grunt.fail.warn(err);
+        grunt.log.error("WARNING: unable to get latest file changes. (possibly connection problem – this will be retried the next time this task is run.)");
         return done();
       }
 
@@ -98,9 +98,9 @@ module.exports = function (grunt) {
 
     // Asynchronously fetch the files in parallel
     async.map(fileInfos, grunt.helper.bind(grunt, 'curl'), function handleCurlResult (err) {
-      // If there is an error, fail
+      // If there is an error, DON'T FAIL (for use offline) - GB
       if (err) {
-        grunt.fail.warn(err);
+        grunt.log.error("WARNING: unable to get latest file changes. (possibly connection problem – this will be retried the next time this task is run.)");
         return done();
       }
 
